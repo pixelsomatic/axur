@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import List from './pages/List';
+import List from './pages/List/index';
 
 function App() {
   return (
