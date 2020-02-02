@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import api from "../../services/api";
 import "./styles.css";
 import { FormattedDate } from "react-intl";
+import {Link} from 'react-router-dom';
 
 class List extends Component {
   state = {
@@ -47,7 +48,9 @@ class List extends Component {
               </div>
             </ol>
           ))}
-          <button> All Publications </button>
+          <Link to="/publications">
+            <button> All Publications </button>
+          </Link>
       </div>
     );
   }
