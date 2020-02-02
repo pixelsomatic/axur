@@ -30,7 +30,7 @@ class List extends Component {
           .sort((a, b) => b.metadata.publishedAt - a.metadata.publishedAt)
           .map((post, index) => (
             <ol className="list" key={post.metadata.publishedAt}>
-              <div class="card-w col-md-4">
+              <div className="card-w col-md-4">
                 <li className="item card neumorphism">
                   <p> {index + 1} </p>
                   <h2 key={post.title}>

@@ -1,28 +1,62 @@
-import React, {Component} from 'react';
-import api from '../../services/api';
+import React, { Component } from "react";
+import api from "../../services/api";
+import authorApi from "../../services/authorApi";
 
 export default class Publications extends Component {
-    state = {
-        details: {},
-    };
+  state = {
+    posts: [],
+    authors: []
+  };
 
-    async componentDidMount() {
-        const { title } = this.props.match.params;  
+	componentDidMount() {
+    this.loadProducts();
+  }
 
-        const response = await api.get(`/details/${title}`);
-
-        this.setState({ details: response.data });
-        console.log(response.data);
-    }
+  loadProducts = async () => {
+    const response = await api.get();
+    this.setState({ posts: response.data });
     
-    render(){
-        const { details } = this.state;
-        return(
-            <div className="book-details">
-                <h1>{details.title}</h1>
-                <p>{details.body}</p>
-                <p>shiiit</p>
+    const responses = await authorApi.get();
+    this.setState({ authors: responses.data });
+  };
+
+  render() {
+    const { posts } = this.state;
+    const { authors } = this.state;
+
+    // mapeia ids dos autores dentro de Posts
+    const authorIdPost = posts.map((post) => (
+      post.metadata.authorId
+    ));
+      console.log(authorIdPost);
+    
+      //mapeia ids de autores dentro de Autores 
+    const authorId = authors.map((author) => (
+      author.id
+    ))  
+      console.log(authorId);
+
+      var equals = Object.entries(authorIdPost).toString() === Object.entries(authorId).toString();
+      console.log(equals);
+
+    return (
+      <div className="all-posts">
+        {authors.map((author) => (
+          <p key={author.id}>{author.name}</p>
+        ))}
+        {posts.map(post => (
+          <ul key={post.title}>
+            <div>
+              <li>
+                <h2>{post.title}</h2>
+								<span>{post.body}</span>
+              </li>
             </div>
-        );
-    }
+          </ul>
+        ))}
+        <p>lol</p>
+      </div>
+
+);
+}
 }
