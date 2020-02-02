@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import List from './pages/List/index';
+import Routes from "./routes";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
 
       </header>
       <div>
-        <List/>
+        <Routes/>
       </div>
     </div>
   );

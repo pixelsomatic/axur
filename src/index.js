@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {IntlProvider} from 'react-intl';
 
 ReactDOM.render(
-<IntlProvider locale="pt">
+<IntlProvider locale="en">
 <App />
 </IntlProvider>,
 document.getElementById('root'));

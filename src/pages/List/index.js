@@ -1,47 +1,53 @@
 import React, { Component } from "react";
 import api from "../../services/api";
-import './styles.css';
-import {FormattedDate} from 'react-intl';
-import orderBy from 'lodash/orderBy';
+import "./styles.css";
+import { FormattedDate } from "react-intl";
 
 class List extends Component {
   state = {
-    books: [],
-    sortAscending: true
+    posts: []
   };
-  
+
   componentDidMount() {
     this.loadProducts();
   }
-  
+
   loadProducts = async () => {
     const response = await api.get();
-    this.setState({ books: response.data });
-    
-    console.log(response.data);
+    this.setState({ posts: response.data });
   };
-  
+
   render() {
-    const { books } = this.state;
-    const {teste} = orderBy(this.state.books, o => o.metadata.publishedAt)
+    const { posts } = this.state;
     return (
-      <div className="book-list">
-        {books.sort((a,b) => a.metadata.publishedAt - b.metadata.publishedAt)
-        .map((book, index) => (
-          <ol className="list" key={book.metadata.publishedAt}>
-            <li className="item">
-              <p className="number">{index +1}</p>
-              <h2 className="headline" key={book.title}>{book.title}</h2>
-              <h4><FormattedDate
-                value={book.metadata.publishedAt}
-                day="numeric"
-                month="long"
-                year="numeric"
-                /></h4>
-            </li>
-          </ol>
-        ))}
-        <button onClick={teste}>teste</button>
+      <div className="post-list">
+        <header className="contents">
+          <h1>Contents</h1>
+          <p>Latest Publications</p>
+        </header>
+        {posts
+          .sort((a, b) => b.metadata.publishedAt - a.metadata.publishedAt)
+          .map((post, index) => (
+            <ol className="list" key={post.metadata.publishedAt}>
+              <div class="card-w col-md-4">
+                <li className="item card neumorphism">
+                  <p> {index + 1} </p>
+                  <h2 key={post.title}>
+                    {post.title}
+                  </h2>
+                  <h4>
+                    <FormattedDate
+                      value={post.metadata.publishedAt}
+                      day="numeric"
+                      month="long"
+                      year="numeric"
+                    />
+                  </h4>
+                </li>
+              </div>
+            </ol>
+          ))}
+          <button> All Publications </button>
       </div>
     );
   }
