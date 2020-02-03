@@ -1,0 +1,60 @@
+.all-posts ul {
+    width: 55rem;
+    max-width: 90%;
+}
+
+.all-posts li {
+    display: block;
+    font-size: 1.1rem;
+    line-height: 1.375;
+    text-align: justify;
+}
+
+.all-posts h2 {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.card-details {
+    align-items: center;
+    padding: 60px 30px;
+    position: relative;
+    background: transparent;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+    background-color: white;
+}
+
+.card-details p {
+    padding-top: 2rem;
+    font-weight: bold;
+}
+
+.neumorphism {
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+  }
+
+  .btn-back {
+      width: 5rem;
+      border-radius: 2rem;
+      border: none;
+      background-color: #12B5B5;
+      margin-bottom: 2rem;
+      height: 2rem;
+      color: white;
+      display: block;
+      cursor: pointer;
+  }
+
+  .btn-back:hover {
+      background-color: #3E9E9E;
+  }
+
+  .main-back {
+      margin-top: 5rem;
+  }
+
+  .main-back h1 {
+    text-align: center;
+}

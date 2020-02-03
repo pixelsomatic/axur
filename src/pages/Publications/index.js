@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import api from "../../services/api";
 import authorApi from "../../services/authorApi";
-
+import "./styles.css";
+import { FormattedDate } from "react-intl";
+import {Link} from 'react-router-dom';
 export default class Publications extends Component {
   state = {
     posts: [],
@@ -21,8 +23,7 @@ export default class Publications extends Component {
   };
 
   render() {
-    const { posts } = this.state;
-    const { authors } = this.state;
+    const { posts, authors } = this.state;
 
     // mapeia ids dos autores dentro de Posts
     const authorIdPost = posts.map((post) => (
@@ -36,26 +37,36 @@ export default class Publications extends Component {
     ))  
       console.log(authorId);
 
-      var equals = Object.entries(authorIdPost).toString() === Object.entries(authorId).toString();
-      console.log(equals);
-
     return (
+      
+      <div className="wrapper">
+        <div className="main-back">
+          <h1> All Publications </h1>
+          <Link to="/">
+            <button className="btn-back"> Back </button>
+          </Link>
+        </div>
       <div className="all-posts">
         {authors.map((author) => (
-          <p key={author.id}>{author.name}</p>
+          <p key={author.id}></p>
         ))}
-        {posts.map(post => (
+        {posts.map((post, author) => (
           <ul key={post.title}>
-            <div>
+            <div className="card-details neumorphism">
               <li>
+                <p>{author.name}</p>
                 <h2>{post.title}</h2>
 								<span>{post.body}</span>
+                <p>Published at: <FormattedDate value={post.metadata.publishedAt}
+                  day="numeric" month="long" year="numeric" />
+                </p>
               </li>
             </div>
           </ul>
         ))}
-        <p>lol</p>
+        <p>sslol</p>
       </div>
+    </div>
 
 );
 }

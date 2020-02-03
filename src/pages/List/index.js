@@ -37,11 +37,8 @@ class List extends Component {
                     {post.title}
                   </h2>
                   <h4>
-                    <FormattedDate
-                      value={post.metadata.publishedAt}
-                      day="numeric"
-                      month="long"
-                      year="numeric"
+                    <FormattedDate value={post.metadata.publishedAt}
+                      day="numeric" month="long" year="numeric"
                     />
                   </h4>
                 </li>
