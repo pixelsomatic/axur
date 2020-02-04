@@ -26,16 +26,24 @@ export default class Publications extends Component {
     const { posts, authors } = this.state;
 
     // mapeia ids dos autores dentro de Posts
-    const authorIdPost = posts.map((post) => (
+    const authorIdPost = posts.map(post => (
       post.metadata.authorId
     ));
-      console.log(authorIdPost);
     
       //mapeia ids de autores dentro de Autores 
-    const authorId = authors.map((author) => (
+    const authorId = authors.map(author => (
       author.id
-    ))  
-      console.log(authorId);
+    ));  
+    
+    const mapItem =[];
+    authors.forEach(author => {
+      posts.forEach(post => {
+        if (author.id === post.metadata.authorId) {
+          mapItem.push(author);
+        }
+      });
+    });
+    console.log(mapItem);
 
     return (
       
@@ -47,14 +55,11 @@ export default class Publications extends Component {
           </Link>
         </div>
       <div className="all-posts">
-        {authors.map((author) => (
-          <p key={author.id}></p>
-        ))}
-        {posts.map((post, author) => (
+        {posts.map(post => (
           <ul key={post.title}>
             <div className="card-details neumorphism">
               <li>
-                <p>{author.name}</p>
+                <p>{mapItem.name}</p>
                 <h2>{post.title}</h2>
 								<span>{post.body}</span>
                 <p>Published at: <FormattedDate value={post.metadata.publishedAt}
@@ -64,7 +69,6 @@ export default class Publications extends Component {
             </div>
           </ul>
         ))}
-        <p>sslol</p>
       </div>
     </div>
 
