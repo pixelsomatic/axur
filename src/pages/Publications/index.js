@@ -38,6 +38,13 @@ export default class Publications extends Component {
     e.preventDefault();
   }
 
+  getAuthorName(post) {
+    if (this.state.authors.length === 0)
+      return "";
+
+    return this.state.authors.filter(a => a.id === post.metadata.authorId)[0].name;
+  }
+
   render() {
     const { posts, authors } = this.state;
 
@@ -56,7 +63,7 @@ export default class Publications extends Component {
           <button className="sort-button" onClick={this.sortAscending}>Older Posts</button>
           <button className="sort-button" onClick={this.sortDescending}>Recent Posts</button>
       </div>
-      <div className="all-posts">
+      {/* <div className="all-posts">
             {authors.map((author) =>
             <div className="card-details neumorphism" key={author.id}>
                 <span className="author-name"> Author: {author.name} </span>
@@ -76,6 +83,11 @@ export default class Publications extends Component {
                     )}
                 </ul>
             </div>
+            )}
+        </div> */}
+        <div>
+          {posts.map(p =>
+            <p>{p.title + " " + this.getAuthorName(p)}</p>
             )}
         </div>
     </div>
