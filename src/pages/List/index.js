@@ -4,7 +4,7 @@ import "./styles.css";
 import { FormattedDate } from "react-intl";
 import {Link} from 'react-router-dom';
 
-class List extends Component {
+export default class List extends Component {
   state = {
     posts: []
   };
@@ -52,4 +52,3 @@ class List extends Component {
     );
   }
 }
-export default List;

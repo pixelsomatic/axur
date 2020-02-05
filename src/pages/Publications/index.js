@@ -4,6 +4,7 @@ import authorApi from "../../services/authorApi";
 import "./styles.css";
 import { FormattedDate } from "react-intl";
 import {Link} from 'react-router-dom';
+import arrowBack from '../../assets/back.svg'
 export default class Publications extends Component {
   state = {
     posts: [],
@@ -30,8 +31,15 @@ export default class Publications extends Component {
         <div className="main-back">
           <h1> All Publications </h1>
           <Link to="/">
-            <button className="btn-back"> Back </button>
+            <button className="btn-back"> 
+              <img src={arrowBack} alt="arrow-back" /> 
+            </button>
           </Link>
+        </div>
+        <div class="hover">
+          <span>Sort Posts</span>
+            <a class="social-link" href="https://twitter.com/twitter" target="_blank">Older posts</a>
+            <a class="social-link" href="https://twitter.com/twitter" target="_blank">Recent posts</a>
         </div>
       <div className="all-posts">
         {authors.map((author) => 
