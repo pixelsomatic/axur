@@ -26,15 +26,15 @@ export default class Publications extends Component {
 
   sortAscending = (e) => {
     const { posts } = this.state;
+    posts.sort((a, b) => a.metadata.publishedAt - b.metadata.publishedAt)
     this.setState({ posts: posts })
-    posts.sort((a, b) => a.metadata.publishedAt - b.metadata.publishedAt)    
     e.preventDefault();
   }
 
   sortDescending = (e) => {
     const { posts } = this.state;
-    this.setState({ posts: posts })
     posts.sort((a, b) => b.metadata.publishedAt - a.metadata.publishedAt)
+    this.setState({ posts: posts })
     e.preventDefault();
   }
 
@@ -42,42 +42,42 @@ export default class Publications extends Component {
     const { posts, authors } = this.state;
 
     return (
-      <div className="wrapper">
-        <div className="main-back">
+    <div className="wrapper">
+      <div className="main-back">
           <h1> All Publications </h1>
           <Link to="/">
-            <button className="btn-back"> 
-              <img src={arrowBack} alt="arrow-back" /> 
+            <button className="btn-back">
+                <img src={arrowBack} alt="arrow-back" />
             </button>
           </Link>
-        </div>
-        <div className="hover">
-          <span>Sort Posts</span>
-            <button className="sort-button" onClick={this.sortAscending}>Older Posts</button>
-            <button className="sort-button" onClick={this.sortDescending}>Recent Posts</button>
-        </div>
-      <div className="all-posts">
-        {authors.map((author) => 
-          <div className="card-details neumorphism" key={author.id}>
-            <span className="author-name"> Author: {author.name} </span>
-              <ul>
-                {posts.filter(p => p.metadata.authorId === author.id).map(post =>
-                  <li key={post.metadata.publishedAt}>
-                    <h2>{post.title}</h2>
-                    <span>{post.body}</span>
-                    <h5>
-                      Published at:   
-                      <FormattedDate 
-                        value={post.metadata.publishedAt}
-                        day="numeric" month="long" year="numeric"
-                      />
-                    </h5>
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
       </div>
+      <div className="hover">
+          <span>Sort Posts</span>
+          <button className="sort-button" onClick={this.sortAscending}>Older Posts</button>
+          <button className="sort-button" onClick={this.sortDescending}>Recent Posts</button>
+      </div>
+      <div className="all-posts">
+            {authors.map((author) =>
+            <div className="card-details neumorphism" key={author.id}>
+                <span className="author-name"> Author: {author.name} </span>
+                <ul>
+                    {posts.filter(p => p.metadata.authorId === author.id).map(post =>
+                    <li key={post.metadata.publishedAt}>
+                        <h2>{post.title}</h2>
+                        <span>{post.body}</span>
+                        <h5>
+                          Published at:    
+                          <FormattedDate 
+                          value={post.metadata.publishedAt}
+                          day="numeric" month="long" year="numeric"
+                          />
+                        </h5>
+                    </li>
+                    )}
+                </ul>
+            </div>
+            )}
+        </div>
     </div>
     );
   }
