@@ -6,7 +6,8 @@ import { FormattedDate } from "react-intl";
 import {Link} from 'react-router-dom';
 import arrowBack from '../../assets/back.svg'
 export default class Publications extends Component {
-  state = {
+ 
+    state = {
     posts: [],
     authors: []
   };
@@ -23,6 +24,20 @@ export default class Publications extends Component {
     this.setState({ authors: responses.data });
   };
 
+  sortAscending = (e) => {
+    const { posts } = this.state;
+    this.setState({ posts: posts })
+    posts.sort((a, b) => a.metadata.publishedAt - b.metadata.publishedAt)    
+    e.preventDefault();
+  }
+
+  sortDescending = (e) => {
+    const { posts } = this.state;
+    this.setState({ posts: posts })
+    posts.sort((a, b) => b.metadata.publishedAt - a.metadata.publishedAt)
+    e.preventDefault();
+  }
+
   render() {
     const { posts, authors } = this.state;
 
@@ -36,18 +51,18 @@ export default class Publications extends Component {
             </button>
           </Link>
         </div>
-        <div class="hover">
+        <div className="hover">
           <span>Sort Posts</span>
-            <a class="social-link" href="https://twitter.com/twitter" target="_blank">Older posts</a>
-            <a class="social-link" href="https://twitter.com/twitter" target="_blank">Recent posts</a>
+            <button className="sort-button" onClick={this.sortAscending}>Older Posts</button>
+            <button className="sort-button" onClick={this.sortDescending}>Recent Posts</button>
         </div>
       <div className="all-posts">
         {authors.map((author) => 
-          <div className="card-details neumorphism">
+          <div className="card-details neumorphism" key={author.id}>
             <span className="author-name"> Author: {author.name} </span>
               <ul>
                 {posts.filter(p => p.metadata.authorId === author.id).map(post =>
-                  <li>
+                  <li key={post.metadata.publishedAt}>
                     <h2>{post.title}</h2>
                     <span>{post.body}</span>
                     <h5>

@@ -72,6 +72,7 @@
     overflow: hidden;
     right: 14rem;
     top: 7rem;
+    cursor: pointer;
   }
   .hover:before, .hover:after {
     position: absolute;
@@ -128,7 +129,7 @@
     transition: opacity 0.25s;
     z-index: 2;
   }
-  .hover .social-link {
+  .hover .sort-button {
     position: relative;
     display: flex;
     align-items: center;
@@ -139,15 +140,14 @@
     font-size: 14px;
     text-decoration: none;
     transition: 0.25s;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
   }
-  .hover .social-link i {
-    text-shadow: 1px 1px rgba(70, 98, 127, 0.7);
-    transform: scale(1);
-  }
-  .hover .social-link:hover {
+  .hover .sort-button:hover {
     background-color: rgba(245, 245, 245, 0.1);
   }
-  .hover .social-link:hover i {
+  .hover .sort-button:hover i {
     animation: bounce 0.4s linear;
   }
   
