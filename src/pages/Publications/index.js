@@ -25,28 +25,7 @@ export default class Publications extends Component {
   render() {
     const { posts, authors } = this.state;
 
-    // mapeia ids dos autores dentro de Posts
-    const authorIdPost = posts.map(post => (
-      post.metadata.authorId
-    ));
-    
-      //mapeia ids de autores dentro de Autores 
-    const authorId = authors.map(author => (
-      author.id
-    ));  
-    
-    const mapItem =[];
-    authors.forEach(author => {
-      posts.forEach(post => {
-        if (author.id === post.metadata.authorId) {
-          mapItem.push(author);
-        }
-      });
-    });
-    console.log(mapItem);
-
     return (
-      
       <div className="wrapper">
         <div className="main-back">
           <h1> All Publications </h1>
@@ -55,23 +34,28 @@ export default class Publications extends Component {
           </Link>
         </div>
       <div className="all-posts">
-        {posts.map(post => (
-          <ul key={post.title}>
-            <div className="card-details neumorphism">
-              <li>
-                <p>{mapItem.name}</p>
-                <h2>{post.title}</h2>
-								<span>{post.body}</span>
-                <p>Published at: <FormattedDate value={post.metadata.publishedAt}
-                  day="numeric" month="long" year="numeric" />
-                </p>
-              </li>
+        {authors.map((author) => 
+          <div className="card-details neumorphism">
+            <span className="author-name"> Author: {author.name} </span>
+              <ul>
+                {posts.filter(p => p.metadata.authorId === author.id).map(post =>
+                  <li>
+                    <h2>{post.title}</h2>
+                    <span>{post.body}</span>
+                    <h5>
+                      Published at:   
+                      <FormattedDate 
+                        value={post.metadata.publishedAt}
+                        day="numeric" month="long" year="numeric"
+                      />
+                    </h5>
+                  </li>
+                )}
+              </ul>
             </div>
-          </ul>
-        ))}
+          )}
       </div>
     </div>
-
-);
-}
+    );
+  }
 }
