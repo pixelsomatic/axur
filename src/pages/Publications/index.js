@@ -1,20 +1,31 @@
 import React, { Component } from "react";
-import api from "../../services/api";
-import authorApi from "../../services/authorApi";
-import "./styles.css";
 import { FormattedDate } from "react-intl";
 import { Link } from "react-router-dom";
+
+import api from "../../services/api";
+import authorApi from "../../services/authorApi";
+import Filter from '../../components/Filter/filter';
+import "./styles.css";
+
 import arrowBack from "../../assets/back.svg";
 export default class Publications extends Component {
   	state = {
    	posts: [],
-    	authors: []
+		authors: [],
+		filteredAuthors: [] 
   	};
 
   	componentDidMount() {
-   	this.loadProducts();
-  	}
-
+		this.loadProducts();
+	}
+	
+	UNSAFE_componentWillMount() {
+		this.setState({
+			authors: this.state.authors,
+			filteredAuthors: this.state.authors
+		})
+	}
+	
   	loadProducts = async () => {
    	const response = await api.get();
     	this.setState({ posts: response.data });
@@ -37,10 +48,23 @@ export default class Publications extends Component {
 		e.preventDefault();
   	};
 
-  	getAuthorName(post) {
+  	getAuthorName = post => {
 		if (this.state.authors.length === 0) return "";
 		return this.state.authors.filter(a => a.id === post.metadata.authorId)[0]
       .name;
+	}
+
+	filterAuthors = (authorFilter) => {
+		let filteredAuthors = this.state.authors
+		filteredAuthors = filteredAuthors.filter((authors) => {
+			let authorName = authors.name.toLowerCase()
+			console.log(filteredAuthors)
+			  	return authorName.indexOf(
+				authorFilter.toLowerCase()) !== -1
+		})
+		this.setState({
+			filteredAuthors
+		})
 	}
 
   	render() {
@@ -87,6 +111,7 @@ export default class Publications extends Component {
 						</div>
 					))}
 				</div>
+				<Filter authors={this.state.filteredAuthors} match={this.props.match} onChange={this.filterAuthors}/>
 			</div>
 		);
   	}
