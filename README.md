@@ -14,9 +14,14 @@ Este projeto foi criado com [Create React App](https://github.com/facebook/creat
  
  ## Install
  
- - $ git clone [git@github.com:Krsnananda/axur.git](git@github.com:Krsnananda/axur.git).
- - $ cd axur
- - $ npm install 
+ - descompacte o arquivo **axur.zip**;
+ 
+ ### Terminal
+
+ * Abra o terminal no local onde se encontra a pasta do projeto;
+ * No terminal, execute: 
+ - `$ cd axur-test`
+ - `$ npm install` ;
  
  ## Scripts
  
