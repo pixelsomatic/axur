@@ -170,3 +170,21 @@
     }
   }
   
+  .filter-author {
+    margin-bottom: 2rem;
+    margin-left: 36rem;
+  }
+
+  .filter-author {
+    padding-right: 4px;
+  }
+
+  #filter {
+    height: 2.7rem;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 2px 2px #919595;
+    width: 13rem;
+    background-color: white;
+    text-align: center;
+  }

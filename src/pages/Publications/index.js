@@ -1,26 +1,36 @@
 import React, { Component } from "react";
+import { FormattedDate } from "react-intl";
+import { Link } from "react-router-dom";
+
 import api from "../../services/api";
 import authorApi from "../../services/authorApi";
 import "./styles.css";
-import { FormattedDate } from "react-intl";
-import { Link } from "react-router-dom";
+
 import arrowBack from "../../assets/back.svg";
 export default class Publications extends Component {
   	state = {
    	posts: [],
-    	authors: []
+		authors: [],
+		filteredPosts: [], 
+		authorFilter: ''
   	};
 
   	componentDidMount() {
-   	this.loadProducts();
-  	}
-
+		this.loadProducts();
+		this.setState({
+			authors: this.state.authors,
+			filteredAuthors: this.state.authors
+		})
+	}
+	
   	loadProducts = async () => {
    	const response = await api.get();
-    	this.setState({ posts: response.data });
-
+		this.setState({ posts: response.data });
+		 
     	const responses = await authorApi.get();
     	this.setState({ authors: responses.data });
+		
+		this.setState({filteredPosts: this.state.posts});
   	};
 
   	sortAscending = e => {
@@ -37,14 +47,19 @@ export default class Publications extends Component {
 		e.preventDefault();
   	};
 
-  	getAuthorName(post) {
+  	getAuthorName = post => {
 		if (this.state.authors.length === 0) return "";
 		return this.state.authors.filter(a => a.id === post.metadata.authorId)[0]
       .name;
 	}
 
+	handleFilterAuthor = (query) => {
+		this.setState({filteredPosts: this.state.posts.filter
+			(p => this.getAuthorName(p).toLowerCase().startsWith(query.toLowerCase())
+			)})
+	}
+
   	render() {
-		const { posts } = this.state;
 
 		return (
 			<div className="wrapper">
@@ -56,6 +71,12 @@ export default class Publications extends Component {
 						</button>
 					</Link>
 				</div>
+				<div className="filter-author">
+					<label htmlFor="filter">Filter by Author: </label>
+					<input type="text" id="filter" placeholder="Type here for search"
+						onChange={(e) => this.handleFilterAuthor(e.target.value)}
+					/>
+				</div>
 				<div className="hover">
 					<span>Sort Posts</span>
 					<button className="sort-button" onClick={this.sortAscending}>
@@ -66,7 +87,7 @@ export default class Publications extends Component {
 					</button>
 				</div>
 				<div className="all-posts">
-					{posts.map(p => (
+					{this.state.filteredPosts.map(p => (
 						<div className="card-details neumorphism" key={p.title}>
 							<span className="author-name">
 								Author: {this.getAuthorName(p)}
