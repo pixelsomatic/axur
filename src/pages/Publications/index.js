@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import api from "../../services/api";
 import authorApi from "../../services/authorApi";
-import Filter from '../../components/Filter/filter';
 import "./styles.css";
 
 import arrowBack from "../../assets/back.svg";
@@ -12,14 +11,12 @@ export default class Publications extends Component {
   	state = {
    	posts: [],
 		authors: [],
-		filteredAuthors: [] 
+		filteredPosts: [], 
+		authorFilter: ''
   	};
 
   	componentDidMount() {
 		this.loadProducts();
-	}
-	
-	UNSAFE_componentWillMount() {
 		this.setState({
 			authors: this.state.authors,
 			filteredAuthors: this.state.authors
@@ -28,10 +25,12 @@ export default class Publications extends Component {
 	
   	loadProducts = async () => {
    	const response = await api.get();
-    	this.setState({ posts: response.data });
-
+		this.setState({ posts: response.data });
+		 
     	const responses = await authorApi.get();
     	this.setState({ authors: responses.data });
+		
+		this.setState({filteredPosts: this.state.posts});
   	};
 
   	sortAscending = e => {
@@ -54,21 +53,13 @@ export default class Publications extends Component {
       .name;
 	}
 
-	filterAuthors = (authorFilter) => {
-		let filteredAuthors = this.state.authors
-		filteredAuthors = filteredAuthors.filter((authors) => {
-			let authorName = authors.name.toLowerCase()
-			console.log(filteredAuthors)
-			  	return authorName.indexOf(
-				authorFilter.toLowerCase()) !== -1
-		})
-		this.setState({
-			filteredAuthors
-		})
+	handleFilterAuthor = (query) => {
+		this.setState({filteredPosts: this.state.posts.filter
+			(p => this.getAuthorName(p).toLowerCase().startsWith(query.toLowerCase())
+			)})
 	}
 
   	render() {
-		const { posts } = this.state;
 
 		return (
 			<div className="wrapper">
@@ -80,6 +71,12 @@ export default class Publications extends Component {
 						</button>
 					</Link>
 				</div>
+				<div className="filter-author">
+					<label htmlFor="filter">Filter by Author: </label>
+					<input type="text" id="filter" placeholder="Type here for search"
+						onChange={(e) => this.handleFilterAuthor(e.target.value)}
+					/>
+				</div>
 				<div className="hover">
 					<span>Sort Posts</span>
 					<button className="sort-button" onClick={this.sortAscending}>
@@ -90,7 +87,7 @@ export default class Publications extends Component {
 					</button>
 				</div>
 				<div className="all-posts">
-					{posts.map(p => (
+					{this.state.filteredPosts.map(p => (
 						<div className="card-details neumorphism" key={p.title}>
 							<span className="author-name">
 								Author: {this.getAuthorName(p)}
@@ -111,7 +108,6 @@ export default class Publications extends Component {
 						</div>
 					))}
 				</div>
-				<Filter authors={this.state.filteredAuthors} match={this.props.match} onChange={this.filterAuthors}/>
 			</div>
 		);
   	}
