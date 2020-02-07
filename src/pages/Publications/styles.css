@@ -16,14 +16,14 @@
 }
 
 .card-details {
-    align-items: center;
-    padding: 60px 30px;
-    position: relative;
-    background: transparent;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin-bottom: 1rem;
-    background-color: white;
+  align-items: center;
+  padding: 60px 30px;
+  position: relative;
+  background: transparent;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 1rem;
+  background-color: white;
 }
 
 .card-details h5 {
@@ -35,14 +35,18 @@
   }
 
   .btn-back {
-      width: 2rem;
-      border: none;
-      background-color: transparent;
-      margin-bottom: 3rem;
-      height: 1rem;
-      color: white;
-      display: block;
-      cursor: pointer;
+    width: 2rem;
+    border: none;
+    background-color: transparent;
+    margin-bottom: 3rem;
+    height: 1rem;
+    color: white;
+    display: block;
+    cursor: pointer;
+  }
+
+  .btn-back:hover {
+    width: 2.2rem;
   }
 
   .main-back {
